@@ -18,8 +18,8 @@ clean: sanity
 
 pdfshow: sanity $(PDF)
 	# for OS X:
-	if [ -x /usr/bin/open ] ; then open $<; fi
+	if [ -x /usr/bin/open ] ; then open $(PDF); fi
 	# for Linux:
-	if [ -x /usr/bin/zathura ] ; then zathura $<; fi &
+	if [ -x /usr/bin/zathura ] ; then zathura $(PDF); fi &
 
 .PHONY: clean pdfshow all
