@@ -1,19 +1,25 @@
-# TEXFILE=$(wildcard *.tex)
-# Main tex file:
-TEXFILE=*.main.tex
+# Find main tex file:
+MAININDICATOR=$(wildcard *.latexmain)
+TEXFILE=$(subst .latexmain,,$(MAININDICATOR))
 PDF=$(TEXFILE:.tex=.pdf)
 
 all: $(PDF)
 
-$(PDF): $(TEXFILE) *.tex refs.bib
-	TEXMFOUTPUT=`pwd` rubber -v --pdf $<
+sanity:
+	@test -f "$(MAININDICATOR)" || (echo "Couldn't find file called *.latexmain!" ; exit 10)
+	@echo "Main LaTeX file = $(TEXFILE)."
 
-clean:
+$(PDF): sanity $(TEXFILE) *.tex *.bib
+	TEXMFOUTPUT=`pwd` rubber -v --pdf $(TEXFILE)
+
+clean: sanity
 	rubber --clean $(TEXFILE)
 	rm -vf $(PDF)
 
-pdfshow: $(PDF)
+pdfshow: sanity $(PDF)
+	# for OS X:
 	if [ -x /usr/bin/open ] ; then open $<; fi
+	# for Linux:
 	if [ -x /usr/bin/zathura ] ; then zathura $<; fi &
 
 .PHONY: clean pdfshow all
