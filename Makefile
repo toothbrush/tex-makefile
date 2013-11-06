@@ -2,6 +2,7 @@
 MAININDICATOR=$(wildcard *.latexmain)
 TEXFILE=$(subst .latexmain,,$(MAININDICATOR))
 PDF=$(TEXFILE:.tex=.pdf)
+BIBS=$(wildcard *.bib)
 
 all: $(PDF)
 
@@ -9,7 +10,8 @@ sanity:
 	@test -f "$(MAININDICATOR)" || (echo "Couldn't find file called *.latexmain!" ; exit 10)
 	@echo "Main LaTeX file = $(TEXFILE)."
 
-$(PDF): sanity $(TEXFILE) *.tex *.bib
+# TODO: smarter *.tex which doesn't duplicate TEXFILE.
+$(PDF): sanity $(TEXFILE) *.tex $(BIBS)
 	TEXMFOUTPUT=`pwd` rubber -v --pdf $(TEXFILE)
 
 clean: sanity
