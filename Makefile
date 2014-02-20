@@ -1,16 +1,17 @@
 # Find main tex file:
-MAININDICATOR=$(wildcard *.latexmain)
+MAININDICATOR=$(wildcard ?*.tex.latexmain)
 TEXFILE=$(subst .latexmain,,$(MAININDICATOR))
 PDF=$(TEXFILE:.tex=.pdf)
 BIBS=$(wildcard *.bib)
+TEXS=$(wildcard *.tex)
 
 all: $(PDF)
 
 sanity:
-	@test -f "$(MAININDICATOR)" || (echo "Couldn't find file called *.latexmain!" ; exit 10)
+	@test -f "$(MAININDICATOR)" || (echo "Couldn't find file called *.tex.latexmain!" ; exit 10)
 	@echo "Main LaTeX file = $(TEXFILE)."
 
-$(PDF): sanity *.tex $(BIBS) img/*
+$(PDF): sanity $(TEXS) $(BIBS) img/*
 	TEXMFOUTPUT=`pwd` rubber -v --pdf $(TEXFILE)
 
 clean: sanity
