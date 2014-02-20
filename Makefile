@@ -9,6 +9,7 @@ all: $(PDF)
 
 sanity:
 	@test -f "$(MAININDICATOR)" || (echo "Couldn't find file called *.tex.latexmain!" ; exit 10)
+	@test -x "`which rubber`"   || (echo "You don't have rubber installed." ; exit 20)
 	@echo "Main LaTeX file = $(TEXFILE)."
 
 $(PDF): sanity $(TEXS) $(BIBS) img/*
