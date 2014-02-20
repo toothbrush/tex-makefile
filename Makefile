@@ -10,8 +10,7 @@ sanity:
 	@test -f "$(MAININDICATOR)" || (echo "Couldn't find file called *.latexmain!" ; exit 10)
 	@echo "Main LaTeX file = $(TEXFILE)."
 
-# TODO: smarter *.tex which doesn't duplicate TEXFILE.
-$(PDF): sanity $(TEXFILE) *.tex $(BIBS)
+$(PDF): sanity *.tex $(BIBS) img/*
 	TEXMFOUTPUT=`pwd` rubber -v --pdf $(TEXFILE)
 
 clean: sanity
