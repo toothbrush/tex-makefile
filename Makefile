@@ -16,6 +16,11 @@ sanity:
 $(PDF): sanity $(TEXS) $(BIBS) $(IMAGES)
 	TEXMFOUTPUT=`pwd` rubber -v --pdf $(TEXFILE)
 
+# list all remaining todo-like notes.
+# note: ugly hack for recognising our initials...
+*.tex:
+	@grep --color=auto -Hn -ie "\(todo\|\\\[pce][wcb]{\)" $@ ; exit 0
+
 clean: sanity
 	rubber --clean $(TEXFILE)
 	rm -vf $(PDF)
@@ -26,4 +31,4 @@ pdfshow: sanity $(PDF)
 	# for Linux:
 	if [ -x /usr/bin/zathura ] ; then zathura $(PDF); fi &
 
-.PHONY: clean pdfshow all
+.PHONY: clean pdfshow all $(TEXS)
