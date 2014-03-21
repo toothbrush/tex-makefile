@@ -4,6 +4,7 @@ TEXFILE=$(subst .latexmain,,$(MAININDICATOR))
 PDF=$(TEXFILE:.tex=.pdf)
 BIBS=$(wildcard *.bib)
 TEXS=$(wildcard *.tex)
+IMAGES=$(wildcard img/*)
 
 all: $(PDF)
 
@@ -12,7 +13,7 @@ sanity:
 	@test -x "`which rubber`"   || (echo "You don't have rubber installed." ; exit 20)
 	@echo "Main LaTeX file = $(TEXFILE)."
 
-$(PDF): sanity $(TEXS) $(BIBS) img/*
+$(PDF): sanity $(TEXS) $(BIBS) $(IMAGES)
 	TEXMFOUTPUT=`pwd` rubber -v --pdf $(TEXFILE)
 
 clean: sanity
