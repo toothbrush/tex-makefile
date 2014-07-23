@@ -6,6 +6,9 @@ BIBS=$(wildcard *.bib)
 TEXS=$(wildcard *.tex)
 IMAGES=$(wildcard img/*)
 
+# find a suitable viewer.
+OPEN=$(shell which xdg-open || which open)
+
 all: $(PDF)
 
 sanity:
@@ -25,10 +28,7 @@ clean: sanity
 	rubber --clean $(TEXFILE)
 	rm -vf $(PDF)
 
-pdfshow: sanity $(PDF)
-# for OS X:
-	if [ -x /usr/bin/open ] ; then open $(PDF); fi
-# for Linux:
-	if [ -x /usr/bin/zathura ] ; then zathura $(PDF); fi &
+view: sanity $(PDF)
+	if [ -x "$(OPEN)" ] ; then $(OPEN) $(PDF) ; fi &
 
-.PHONY: clean pdfshow all $(TEXS)
+.PHONY: clean view all $(TEXS)
