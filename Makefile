@@ -22,7 +22,7 @@ $(PDF): sanity $(TEXS) $(BIBS) $(IMAGES)
 # list all remaining todo-like notes.
 # note: ugly hack for recognising our initials...
 *.tex:
-	@grep --color=auto -Hn -e "\(TODO\|\\\[pce][wcb]{\)" $@ ; exit 0
+	@grep --color=auto -Hni -e "TODO" $@ ; exit 0
 
 clean: sanity
 	rubber --clean $(TEXFILE)
