@@ -9,7 +9,7 @@ IMAGES=$(wildcard img/*)
 # find a suitable viewer.
 OPEN=$(shell which xdg-open || which open)
 
-all: $(PDF)
+all: sanity $(PDF)
 
 sanity:
 	@test -f "$(MAININDICATOR)" || (echo "Couldn't find file called *.tex.latexmain!" ; exit 10)
